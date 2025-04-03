@@ -47,7 +47,7 @@ const App: React.FC = () => {
       .then(() => {
         setProducts(products.filter((product) => product.id !== id));
 
-        if (!!productToDelete) {
+        if (productToDelete) {
           toast.success(
             `Product "${productToDelete.name}" has been deleted successfully!`
           );

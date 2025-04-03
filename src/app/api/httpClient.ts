@@ -48,7 +48,7 @@ const requests = {
 
 const Products = {
   list: () => requests.get<Product[]>("/api/products"),
-  create: (product: Omit<Product, "id">) =>
+  create: (product: Product) =>
     requests.post<Product>("/api/products", product),
   delete: (id: number) => requests.delete<void>(`/api/products/${id}`),
 };
