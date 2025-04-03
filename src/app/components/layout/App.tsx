@@ -12,7 +12,6 @@ const App: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [loadingProductId, setLoadingProductId] = useState<number | null>(null);
 
-  // Load products from API
   useEffect(() => {
     loadProducts();
   }, []);
@@ -32,23 +31,26 @@ const App: React.FC = () => {
     httpClient.Products.create(product)
       .then((newProduct) => {
         setProducts([...products, newProduct]);
-        toast.success(`Product "${newProduct.name}" has been added successfully!`);
+        toast.success(
+          `Product "${newProduct.name}" has been added successfully!`
+        );
       })
       .catch((error) => console.error("Error adding product:", error))
       .finally(() => setSubmitting(false));
   };
 
   const handleDeleteProduct = (id: number) => {
-    // Find the product before deleting it to reference its name in the success message
-    const productToDelete = products.find(p => p.id === id);
-    
+    const productToDelete = products.find((p) => p.id === id);
+
     setLoadingProductId(id);
     httpClient.Products.delete(id)
       .then(() => {
         setProducts(products.filter((product) => product.id !== id));
-        
+
         if (productToDelete) {
-          toast.success(`Product "${productToDelete.name}" has been deleted successfully!`);
+          toast.success(
+            `Product "${productToDelete.name}" has been deleted successfully!`
+          );
         } else {
           toast.success("Product has been deleted successfully!");
         }
@@ -72,9 +74,9 @@ const App: React.FC = () => {
           <p className="text-gray-500">Loading products...</p>
         </div>
       ) : (
-        <ProductsList 
-          products={products} 
-          onDelete={handleDeleteProduct} 
+        <ProductsList
+          products={products}
+          onDelete={handleDeleteProduct}
           isLoading={loadingProductId !== null}
           loadingProductId={loadingProductId}
         />
