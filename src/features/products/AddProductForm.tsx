@@ -37,7 +37,7 @@ const formSchema = z.object({
 type FormValues = z.infer<typeof formSchema>;
 
 interface AddProductFormProps {
-  onAdd: (product: Omit<Product, "id">) => void;
+  onAdd: (product: Product) => void;
   isSubmitting: boolean;
 }
 
@@ -54,7 +54,7 @@ const AddProductForm: React.FC<AddProductFormProps> = ({
   });
 
   const onSubmit = (values: FormValues) => {
-    onAdd(values);
+    onAdd({ ...values } as Product);
     form.reset();
   };
 

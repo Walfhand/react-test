@@ -26,7 +26,7 @@ const App: React.FC = () => {
       .finally(() => setLoading(false));
   };
 
-  const handleAddProduct = (product: Omit<Product, "id">) => {
+  const handleAddProduct = (product: Product) => {
     setSubmitting(true);
     httpClient.Products.create(product)
       .then((newProduct) => {
@@ -47,12 +47,10 @@ const App: React.FC = () => {
       .then(() => {
         setProducts(products.filter((product) => product.id !== id));
 
-        if (productToDelete) {
+        if (!!productToDelete) {
           toast.success(
             `Product "${productToDelete.name}" has been deleted successfully!`
           );
-        } else {
-          toast.success("Product has been deleted successfully!");
         }
       })
       .catch((error) => console.error("Error deleting product:", error))
